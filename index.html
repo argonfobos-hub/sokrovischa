@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Открой Россию: Сокровища земли русской</title>
+
+    <style>
+        :root {
+            --bg-dark: #071821;
+            --bg-deep: #0b2530;
+            --emerald: #0f6b5f;
+            --emerald-light: #19a58d;
+            --gold: #d8ad4f;
+            --gold-light: #ffe6a3;
+            --ruby: #9d2438;
+            --sapphire: #1c5d99;
+            --text: #f7efe0;
+            --muted: #cbbf9f;
+            --card: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 230, 163, 0.28);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(25, 165, 141, 0.28), transparent 34%),
+                radial-gradient(circle at top right, rgba(216, 173, 79, 0.18), transparent 35%),
+                radial-gradient(circle at bottom, rgba(157, 36, 56, 0.2), transparent 45%),
+                linear-gradient(135deg, #031017 0%, #071821 42%, #0c2c2f 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, black, transparent 85%);
+            z-index: -1;
+        }
+
+        a { color: inherit; }
+        .page { width: min(1220px, calc(100% - 32px)); margin: 0 auto; }
+
+        /* ================= HERO ================= */
+        .hero {
+            position: relative;
+            padding: 72px 0 48px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before, .hero::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            filter: blur(18px);
+            opacity: 0.45;
+            animation: floatGlow 7s ease-in-out infinite alternate;
+        }
+        .hero::before { left: -80px; top: 60px; background: radial-gradient(circle, var(--emerald-light), transparent 68%); }
+        .hero::after { right: -80px; top: 20px; background: radial-gradient(circle, var(--gold), transparent 68%); animation-delay: 1.2s; }
+
+        @keyframes floatGlow {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(22px) scale(1.08); }
+        }
+
+        .hero-label {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 8px 18px; border: 1px solid rgba(255, 230, 163, 0.4);
+            border-radius: 999px; color: var(--gold-light);
+            background: rgba(255, 255, 255, 0.06); backdrop-filter: blur(8px);
+            font-family: Arial, sans-serif; letter-spacing: 0.08em;
+            text-transform: uppercase; font-size: 0.78rem;
+        }
+
+        .library-name {
+            margin: 20px auto 0; max-width: 700px; padding: 12px 24px;
+            border: 1px solid rgba(255, 230, 163, 0.3); border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(6px);
+            color: var(--gold-light); font-family: Arial, sans-serif;
+            font-size: 0.95rem; letter-spacing: 0.04em; line-height: 1.5;
+        }
+
+        .hero h1 {
+            position: relative; margin: 24px auto 10px; max-width: 980px;
+            font-size: clamp(2.6rem, 7vw, 6.4rem); line-height: 0.95;
+            letter-spacing: 0.03em; text-transform: uppercase;
+            background: linear-gradient(90deg, #fff5c9, #d8ad4f, #ffffff, #b8872c, #ffe6a3);
+            background-size: 220% auto; -webkit-background-clip: text;
+            background-clip: text; color: transparent;
+            animation: goldFlow 7s linear infinite;
+            text-shadow: 0 0 40px rgba(216, 173, 79, 0.15);
+        }
+
+        @keyframes goldFlow { to { background-position: 220% center; } }
+
+        .hero h2 { margin: 0 auto; max-width: 860px; font-size: clamp(1.5rem, 3.4vw, 3rem); font-weight: normal; color: #fff7df; }
+        .hero-text { max-width: 760px; margin: 24px auto 0; color: var(--muted); font-size: 1.15rem; line-height: 1.75; }
+
+        .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
+
+        .btn {
+            border: 0; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 9px; padding: 14px 24px; border-radius: 999px;
+            font-family: Arial, sans-serif; font-weight: 700; transition: 0.25s ease;
+        }
+        .btn-primary { color: #241705; background: linear-gradient(135deg, var(--gold-light), var(--gold)); box-shadow: 0 14px 35px rgba(216, 173, 79, 0.26); }
+        .btn-secondary { color: var(--gold-light); background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 230, 163, 0.35); }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.08); }
+
+        .gem-row { display: flex; justify-content: center; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
+        .gem {
+            width: 42px; height: 42px; transform: rotate(45deg); border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.05));
+            box-shadow: 0 0 28px currentColor; opacity: 0.85;
+        }
+        .gem:nth-child(1) { color: #31d6b6; background-color: #0f6b5f; }
+        .gem:nth-child(2) { color: #ffd66b; background-color: #d8ad4f; }
+        .gem:nth-child(3) { color: #ff6680; background-color: #9d2438; }
+        .gem:nth-child(4) { color: #75bfff; background-color: #1c5d99; }
+        .gem:nth-child(5) { color: #e8d5ff; background-color: #6b4ba3; }
+
+        /* ================= SECTIONS ================= */
+        .section { padding: 46px 0; }
+        .section-title { text-align: center; margin-bottom: 28px; }
+        .section-title span { display: block; color: var(--gold); font-family: Arial, sans-serif; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 10px; }
+        .section-title h3 { margin: 0; font-size: clamp(1.8rem, 4vw, 3.2rem); color: #fff5d4; }
+        .section-title p { max-width: 760px; margin: 14px auto 0; color: var(--muted); line-height: 1.7; }
+
+        /* ================= VIDEO HALLS ================= */
+        .video-halls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+        .video-card {
+            position: relative; overflow: hidden; border-radius: 26px;
+            border: 1px solid var(--card-border);
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)), radial-gradient(circle at top right, rgba(216, 173, 79, 0.18), transparent 45%);
+            box-shadow: var(--shadow); padding: 22px;
+        }
+        .video-card h4 { margin: 0 0 12px; font-size: 1.45rem; color: var(--gold-light); }
+        .video-card p { color: var(--muted); line-height: 1.6; margin: 0 0 16px; }
+        .video-shell {
+            position: relative; overflow: hidden; border-radius: 18px;
+            background: radial-gradient(circle, rgba(216,173,79,0.15), transparent 55%), linear-gradient(135deg, #02080b, #12333a);
+            aspect-ratio: 16 / 9; border: 1px solid rgba(255, 230, 163, 0.2);
+        }
+        video { width: 100%; height: 100%; display: block; object-fit: cover; background: #000; }
+        .video-note { font-family: Arial, sans-serif; font-size: 0.86rem; color: rgba(255,255,255,0.65); margin-top: 10px; }
+
+        /* ================= TREASURE PANEL ================= */
+        .treasure-panel {
+            display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+            padding: 22px; border: 1px solid var(--card-border); border-radius: 26px;
+            background: rgba(255, 255, 255, 0.075); box-shadow: var(--shadow); margin-bottom: 24px;
+        }
+        .progress-title { margin: 0 0 10px; color: var(--gold-light); font-size: 1.1rem; }
+        .progress-bar { height: 12px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--emerald-light), var(--gold-light), var(--gold)); transition: width 0.35s ease; }
+
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 22px 0 30px; }
+        .filter-btn {
+            cursor: pointer; border: 1px solid rgba(255, 230, 163, 0.32); color: var(--gold-light);
+            background: rgba(255,255,255,0.06); border-radius: 999px; padding: 11px 18px;
+            font-family: Arial, sans-serif; font-weight: 700; transition: 0.22s ease;
+        }
+        .filter-btn:hover, .filter-btn.active { color: #241705; background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+
+        /* ================= CARDS (АДАПТИРОВАНО ПОД ВЕРТИКАЛЬНЫЕ ФОТО) ================= */
+        .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
+        .card {
+            position: relative; overflow: hidden; border: 1px solid var(--card-border);
+            border-radius: 24px; background: rgba(255,255,255,0.08);
+            box-shadow: 0 14px 44px rgba(0,0,0,0.35); cursor: pointer;
+            text-align: left; color: var(--text); padding: 0; transition: 0.28s ease;
+        }
+        .card:hover { transform: translateY(-8px); border-color: rgba(255, 230, 163, 0.7); box-shadow: 0 22px 60px rgba(216,173,79,0.15); }
+        .card.opened::after {
+            content: "Открыто"; position: absolute; top: 12px; left: 12px;
+            padding: 5px 10px; border-radius: 999px; color: #1d1606;
+            background: var(--gold-light); font-family: Arial, sans-serif;
+            font-size: 0.72rem; font-weight: 700; z-index: 3;
+        }
+
+        /* Вертикальная рамка для фото в карточке */
+        .card-media {
+            position: relative;
+            aspect-ratio: 4 / 5; /* Вертикальная пропорция */
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(25,165,141,0.7), rgba(28,93,153,0.65), rgba(157,36,56,0.55));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .card-media img, .modal-media img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+        }
+        .card-symbol { position: absolute; font-size: 3.2rem; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.45)); z-index: 2; }
+        .card-type {
+            position: absolute; right: 10px; bottom: 10px; padding: 5px 10px;
+            border-radius: 999px; background: rgba(0,0,0,0.6); color: var(--gold-light);
+            font-family: Arial, sans-serif; font-size: 0.75rem; backdrop-filter: blur(8px); z-index: 2;
+        }
+
+        .card-body { padding: 16px; }
+        .card-region { color: var(--muted); font-family: Arial, sans-serif; font-size: 0.78rem; margin-bottom: 8px; }
+        .card h4 { margin: 0 0 10px; font-size: 1.2rem; color: #fff6d8; }
+        .card-unique { color: var(--gold-light); line-height: 1.45; font-size: 0.92rem; margin-bottom: 10px; font-style: italic; }
+        .card-short { color: rgba(247,239,224,0.74); line-height: 1.5; font-size: 0.9rem; }
+
+        /* ================= MODAL (АДАПТИРОВАНО ПОД ВЕРТИКАЛЬНЫЕ ФОТО) ================= */
+        .modal {
+            position: fixed; inset: 0; z-index: 1000; display: none;
+            align-items: center; justify-content: center; padding: 20px;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+        }
+        .modal.show { display: flex; }
+        .modal-window {
+            width: min(900px, 100%); max-height: 92vh; overflow-y: auto;
+            border-radius: 28px; border: 1px solid rgba(255,230,163,0.38);
+            background: radial-gradient(circle at top right, rgba(216,173,79,0.16), transparent 38%), linear-gradient(135deg, #071821, #0c3033);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.75); position: relative;
+        }
+        .modal-close {
+            position: sticky; top: 12px; float: right; margin: 12px 16px 0 0; z-index: 5;
+            width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,230,163,0.35);
+            background: rgba(0,0,0,0.38); color: var(--gold-light); cursor: pointer; font-size: 1.5rem;
+        }
+        .modal-content { padding: 28px; }
+        
+        /* Вертикальная рамка для фото в модальном окне */
+        .modal-media {
+            aspect-ratio: 3 / 4; /* Идеально для книжных фото */
+            max-height: 60vh;
+            border-radius: 22px; overflow: hidden;
+            border: 1px solid rgba(255,230,163,0.25);
+            background: linear-gradient(135deg, var(--emerald), var(--sapphire), var(--ruby));
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 22px;
+        }
+        .modal-symbol { font-size: 6rem; z-index: 2; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)); }
+
+        .modal-kicker { color: var(--gold); font-family: Arial, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.82rem; }
+        .modal-content h3 { margin: 10px 0; font-size: clamp(2rem, 5vw, 3.4rem); color: #fff4ce; }
+        .modal-unique { color: var(--gold-light); font-size: 1.22rem; line-height: 1.55; margin-bottom: 18px; font-style: italic; }
+        .modal-text { color: rgba(247,239,224,0.9); line-height: 1.8; font-size: 1.05rem; }
+
+        .facts { display: grid; gap: 12px; margin: 22px 0; }
+        .fact {
+            padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,0.075);
+            border: 1px solid rgba(255,230,163,0.16); color: rgba(247,239,224,0.88); line-height: 1.55;
+        }
+        .modal-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+
+        /* ================= QUIZ ================= */
+        .quiz-box {
+            border: 1px solid var(--card-border); border-radius: 28px;
+            background: radial-gradient(circle at top left, rgba(25,165,141,0.16), transparent 36%), rgba(255,255,255,0.075);
+            box-shadow: var(--shadow); padding: 26px;
+        }
+        .question { padding: 18px 0; border-bottom: 1px solid rgba(255,230,163,0.14); }
+        .question:last-child { border-bottom: 0; }
+        .question h4 { margin: 0 0 14px; color: #fff4ce; font-size: 1.1rem; }
+        .answers { display: grid; gap: 10px; }
+        .answer {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            border-radius: 14px; background: rgba(255,255,255,0.06); cursor: pointer;
+            color: rgba(247,239,224,0.86); font-family: Arial, sans-serif;
+        }
+        .answer:hover { background: rgba(255,230,163,0.12); }
+        .answer input { accent-color: var(--gold); }
+        .quiz-result {
+            margin-top: 20px; padding: 18px; border-radius: 18px;
+            background: rgba(216,173,79,0.13); border: 1px solid rgba(255,230,163,0.24);
+            color: var(--gold-light); display: none; line-height: 1.6;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            text-align: center; padding: 48px 20px; color: var(--muted);
+            font-family: Arial, sans-serif; font-size: 0.95rem; line-height: 1.8;
+            border-top: 1px solid rgba(255, 230, 163, 0.15);
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent); margin-top: 40px;
+        }
+        .footer-title { color: var(--gold-light); font-size: 1.05rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px; font-weight: 600; }
+        .footer-contacts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; align-items: center; }
+        .footer-item a { color: var(--text); text-decoration: none; transition: color 0.2s ease, border-color 0.2s ease; border-bottom: 1px solid transparent; }
+        .footer-item a:hover { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+        .footer-copy { font-size: 0.85rem; opacity: 0.7; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 230, 163, 0.1); }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 760px) {
+            .video-halls { grid-template-columns: 1fr; }
+            .treasure-panel { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .modal-content { padding: 20px; }
+        }
+        @media (max-width: 520px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 46px; }
+            .hero-actions { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero page">
+        <div class="hero-label">Интерактивная онлайн-выставка</div>
+        <div class="library-name">МБУК «Центральная городская библиотека» г. Нижний Тагил</div>
+        <h1>Открой Россию</h1>
+        <h2>Сокровища земли русской</h2>
+        <p class="hero-text">
+            Перед вами — драгоценная коллекция природных чудес и архитектурных шедевров.
+            Каждое сокровище хранит силу земли, красоту времени и мастерство человека.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="#treasures">💎 Открыть сокровищницу</a>
+            <button class="btn btn-secondary" id="randomBtn">✨ Случайное сокровище</button>
+            <a class="btn btn-secondary" href="#quiz">🏆 Пройти квиз</a>
+        </div>
+        <div class="gem-row" aria-hidden="true">
+            <div class="gem"></div><div class="gem"></div><div class="gem"></div><div class="gem"></div><div class="gem"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section page" id="video">
+            <div class="section-title">
+                <span>Два видео-зала</span>
+                <h3>Вход в сокровищницу</h3>
+                <p>Видео не перегружают выставку: здесь всего два обзорных ролика. Один открывает природную мощь России, другой — архитектурное наследие.</p>
+            </div>
+            <div class="video-halls">
+                <article class="video-card">
+                    <h4>🌲 Природные сокровища России</h4>
+                    <p>Байкал, Ленские столбы, Эльбрус, плато Путорана и Долина гейзеров — ландшафты, которые невозможно забыть.</p>
+                    <div class="video-shell">
+                        <video controls preload="none" poster="assets/images/nature-poster.jpg">
+                            <source src="assets/video/nature.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-note">Файл видео: assets/video/nature.mp4</div>
+                </article>
+                <article class="video-card">
+                    <h4>🏛 Архитектурные сокровища России</h4>
+                    <p>Кижи, Невьянская башня, Свияжск, Дербент и Тобольский кремль — памятники мастерства, веры, инженерной мысли и истории.</p>
+                    <div class="video-shell">
+                        <video controls preload="none" poster="assets/images/architecture-poster.jpg">
+                            <source src="assets/video/architecture.mp4" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </div>
+                    <div class="video-note">Файл видео: assets/video/architecture.mp4</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section page" id="treasures">
+            <div class="section-title">
+                <span>Главная коллекция</span>
+                <h3>10 сокровищ России</h3>
+                <p>Открывайте карточки, рассматривайте изображения, читайте историю и собирайте свою коллекцию впечатлений.</p>
+            </div>
+            <div class="treasure-panel">
+                <div>
+                    <p class="progress-title" id="progressText">Вы открыли сокровищ: 0 из 10</p>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                </div>
+                <button class="btn btn-primary" id="resetProgressBtn">Сбросить коллекцию</button>
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все сокровища</button>
+                <button class="filter-btn" data-filter="Природа">🌲 Природа</button>
+                <button class="filter-btn" data-filter="Архитектура">🏛 Архитектура</button>
+            </div>
+            <div class="grid" id="grid"></div>
+        </section>
+
+        <section class="section page" id="quiz">
+            <div class="section-title">
+                <span>Интерактив</span>
+                <h3>Квиз знатока сокровищ</h3>
+                <p>Проверьте, какие объекты запомнились лучше всего. В конце квиз покажет результат и звание знатока.</p>
+            </div>
+            <div class="quiz-box">
+                <form id="quizForm"></form>
+                <div class="hero-actions" style="justify-content:flex-start;">
+                    <button class="btn btn-primary" id="checkQuizBtn" type="button">Проверить ответы</button>
+                    <button class="btn btn-secondary" id="retryQuizBtn" type="button">Пройти ещё раз</button>
+                </div>
+                <div class="quiz-result" id="quizResult"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-title">Муниципальное бюджетное учреждение культуры<br>«Центральная городская библиотека»</div>
+        <div class="footer-contacts">
+            <div class="footer-item">📍 г. Нижний Тагил</div>
+            <div class="footer-item">📧 <a href="mailto:cgb@tagillib.ru">cgb@tagillib.ru</a></div>
+            <div class="footer-item">📞 <a href="tel:+73435412888">+7 (3435) 412-888</a></div>
+            <div class="footer-item">📘 <a href="https://vk.ru/public50257368" target="_blank" rel="noopener noreferrer">Общественная страница ВКонтакте</a></div>
+        </div>
+        <div class="footer-copy">Открой Россию: Сокровища земли русской · Интерактивная онлайн-выставка</div>
+    </footer>
+
+    <div class="modal" id="modal" aria-hidden="true">
+        <div class="modal-window">
+            <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+            <div class="modal-content">
+                <div class="modal-media" id="modalMedia"></div>
+                <div class="modal-kicker" id="modalKicker"></div>
+                <h3 id="modalTitle"></h3>
+                <div class="modal-unique" id="modalUnique"></div>
+                <div class="modal-text" id="modalText"></div>
+                <div class="facts" id="modalFacts"></div>
+                <div class="modal-nav">
+                    <button class="btn btn-secondary" id="prevBtn">← Предыдущее</button>
+                    <button class="btn btn-primary" id="nextBtn">Следующее →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const exhibits = [
+            {
+                id: "baikal",
+                title: "Байкал",
+                type: "Природа",
+                region: "Иркутская область / Бурятия",
+                symbol: "💧",
+                image: "assets/images/baikal.jpg",
+                unique: "Синее сердце Сибири и главное водное сокровище планеты.",
+                short: "Озеро колоссальной глубины, прозрачной воды и уникальной экосистемы.",
+                full: "Байкал — это не просто озеро, а живой организм планеты. Его глубина достигает 1642 метров, а возраст оценивается в 25 миллионов лет. Зимой он превращается в сказку из прозрачного льда с бирюзовыми трещинами, а летом поражает первозданной чистотой воды, сквозь которую видно дно на глубине 40 метров.",
+                facts: [
+                    "Содержит около 20% всех мировых запасов поверхностной пресной воды.",
+                    "Здесь обитает байкальская нерпа — единственный в мире пресноводный тюлень.",
+                    "В Байкал впадает более 300 рек, а вытекает только одна — Ангара."
+                ]
+            },
+            {
+                id: "lenskie-stolby",
+                title: "Ленские столбы",
+                type: "Природа",
+                region: "Республика Саха (Якутия)",
+                symbol: "🪨",
+                image: "assets/images/lenskie-stolby.jpg",
+                unique: "Каменная стража времени, хранящая тайны древней Земли.",
+                short: "Вертикальные скалы, похожие на стены мифического великаньего города.",
+                full: "Вдоль берегов могучей реки Лены вытянулась цепь исполинских скал. Эти каменные столбы высотой до 100 метров — не что иное, как окаменевшие морские рифы кембрийского периода. Им более 500 миллионов лет, и они хранят в своих слоях отпечатки древнейших форм жизни.",
+                facts: [
+                    "Включены в список Всемирного наследия ЮНЕСКО.",
+                    "В скалах можно найти окаменелости древних трилобитов и археоциат.",
+                    "Лучший вид на столбы открывается во время речной прогулки по Лене."
+                ]
+            },
+            {
+                id: "geysers",
+                title: "Долина гейзеров",
+                type: "Природа",
+                region: "Камчатский край",
+                symbol: "♨️",
+                image: "assets/images/geysers.jpg",
+                unique: "Место, где Земля дышит паром и бьёт горячими фонтанами.",
+                short: "Единственное в Евразии и одно из крупнейших в мире полей гейзеров.",
+                full: "В узком каньоне реки Гейзерной скрыто настоящее чудо вулканической активности. Десятки источников и около 20 крупных гейзеров периодически выбрасывают столбы кипятка и пара на высоту многоэтажного дома. Это место, где внутренняя энергия планеты вырывается наружу во всей своей первозданной мощи.",
+                facts: [
+                    "Самый крупный гейзер «Великан» выбрасывает воду на высоту до 30 метров.",
+                    "Долина входит в состав Кроноцкого государственного природного заповедника.",
+                    "Активность гейзеров может меняться из-за подземных толчков или оползней."
+                ]
+            },
+            {
+                id: "elbrus",
+                title: "Эльбрус",
+                type: "Природа",
+                region: "Кабардино-Балкария / Карачаево-Черкесия",
+                symbol: "🏔",
+                image: "assets/images/elbrus.jpg",
+                unique: "Двуглавый властелин Кавказа и высочайшая вершина Европы.",
+                short: "Седой великан, символ высоты, силы и кавказского простора.",
+                full: "Эльбрус — это спящий стратовулкан с двумя вершинами: Западной (5642 м) и Восточной (5621 м). Его склоны покрыты вечными снегами и ледниками, которые дают начало крупнейшим рекам региона. Для альпинистов всего мира он является одной из главных вершин в списке «Семь вершин».",
+                facts: [
+                    "Последнее задокументированное извержение вулкана произошло около 50 года н.э.",
+                    "Канатная дорога поднимает посетителей на высоту более 3800 метров.",
+                    "С Эльбрусом связано множество древних легенд народов Кавказа."
+                ]
+            },
+            {
+                id: "putorana",
+                title: "Плато Путорана",
+                type: "Природа",
+                region: "Красноярский край",
+                symbol: "🌋",
+                image: "assets/images/putorana.jpg",
+                unique: "Затерянный мир базальтовых каньонов, озёр и водопадов.",
+                short: "Один из самых труднодоступных и загадочных ландшафтов планеты.",
+                full: "Путорана в переводе с эвенкийского означает «озёра с крутыми берегами». Этот гигантский природный массив на севере Средней Сибири напоминает другую планету: плоские вершины столовых гор, глубочайшие каньоны и более 10 000 водопадов, самый высокий из которых (Тальниковый) падает с высоты почти 700 метров.",
+                facts: [
+                    "Включено в список Всемирного наследия ЮНЕСКО.",
+                    "Здесь нет постоянных поселений, это территория дикой природы.",
+                    "Ландшафт сформирован древними вулканическими извержениями (траппами)."
+                ]
+            },
+            {
+                id: "kizhi",
+                title: "Кижи",
+                type: "Архитектура",
+                region: "Республика Карелия",
+                symbol: "⛪",
+                image: "assets/images/kizhi.jpg",
+                unique: "Деревянная симфония Севера, шедевр народного зодчества.",
+                short: "Островной музей под открытым небом, символ русской культуры.",
+                full: "Ансамбль Кижского погоста поражает воображение своей стройностью и гармонией с суровым северным пейзажем. Главная жемчужина — 22-главая Церковь Преображения Господня, построенная в 1714 году. Её сложная многоярусная конструкция, выполненная исключительно топором, не имеет аналогов в мире.",
+                facts: [
+                    "Легенда гласит, что мастер Нестор, построив церковь, выбросил топор в озеро, сказав: «Не было такой, не будет и впредь».",
+                    "Для скрепления брёвен использовались только деревянные нагели (шипы).",
+                    "Кижский погост является объектом Всемирного наследия ЮНЕСКО."
+                ]
+            },
+            {
+                id: "nevyansk",
+                title: "Невьянская башня",
+                type: "Архитектура",
+                region: "Свердловская область",
+                symbol: "🕰",
+                image: "assets/images/nevyansk.jpg",
+                unique: "Уральский символ дерзости, инженерной мысли и тайн Демидовых.",
+                short: "Знаменитая наклонная башня с музыкальными курантами.",
+                full: "Построенная в первой половине XVIII века по приказу Акинфия Демидова, эта башня стала визитной карточкой Урала. Она отклоняется от вертикали почти на 2 метра. Внутри скрыта уникальная «слуховая комната», где шёпот в одном углу отчётливо слышен в противоположном, а на шпиле установлены английские куранты с 10 колоколами.",
+                facts: [
+                    "Наклон башни был заложен проектом или возник из-за просадки фундамента — точная причина до сих пор дискутируется.",
+                    "Куранты бьют каждые 15 минут, играя мелодию «Славься» Глинки.",
+                    "С башней связано множество народных легенд о кладах и суровом нраве Демидова."
+                ]
+            },
+            {
+                id: "sviyazhsk",
+                title: "Свияжск",
+                type: "Архитектура",
+                region: "Республика Татарстан",
+                symbol: "🏝",
+                image: "assets/images/sviyazhsk.jpg",
+                unique: "Остров-град, рождённый за 4 недели и сохранивший дух XVI века.",
+                short: "Уникальное место, где военная история и духовность слились воедино.",
+                full: "Основанный Иваном Грозным в 1551 году как крепость для взятия Казани, Свияжск стал чудом инженерной мысли того времени. Сруб крепости был изготовлен в Угличе, пронумерован, сплавлен по Волге и собран на острове всего за 4 недели. Сегодня это тихий остров с величественными храмами и древними фресками.",
+                facts: [
+                    "Успенский собор Свияжска содержит единственные в мире фрески, где среди святых изображён Иван Грозный.",
+                    "Включён в список Всемирного наследия ЮНЕСКО.",
+                    "Добраться до острова можно на поезде, который проходит прямо по дамбе."
+                ]
+            },
+            {
+                id: "derbent",
+                title: "Дербент и Нарын-Кала",
+                type: "Архитектура",
+                region: "Республика Дагестан",
+                symbol: "🏰",
+                image: "assets/images/derbent.jpg",
+                unique: "Древнейший город России, ворота между морем и горами.",
+                short: "Каменная память 5000-летней истории Кавказа.",
+                full: "Дербент — живой свидетель эпох. Его цитадель Нарын-Кала («Солнечная крепость») веками охраняла узкий проход между Каспийским морем и отрогами Кавказских гор. Старинные кварталы (магалы), древние стены и первая на территории России Джума-мечеть (VIII век) создают неповторимую атмосферу восточного города.",
+                facts: [
+                    "Возраст города оценивается более чем в 5000 лет.",
+                    "Дербентские крепостные сооружения входят в список ЮНЕСКО.",
+                    "Через город проходил Великий шёлковый путь."
+                ]
+            },
+            {
+                id: "tobolsk",
+                title: "Тобольский кремль",
+                type: "Архитектура",
+                region: "Тюменская область",
+                symbol: "🤍",
+                image: "assets/images/tobolsk.jpg",
+                unique: "Белокаменная корона Сибири и единственный каменный кремль за Уралом.",
+                short: "Величественный символ власти, веры и освоения огромных пространств.",
+                full: "Возвышающийся на Троицком мысу, Тобольский кремль — главный архитектурный памятник Сибири. Он строился в конце XVII – начале XVIII века силами ссыльных и местных мастеров. Его белокаменные стены и Софийско-Успенский собор доминируют над городом, напоминая о временах, когда Тобольск был столицей всей Сибири.",
+                facts: [
+                    "Это единственный каменный кремль, построенный в Сибири.",
+                    "В его стенах некоторое время содержалась царская семья Романовых перед ссылкой в Екатеринбург.",
+                    "Архитектурный ансамбль включает Рентерею (казнохранилище) и Губернаторский дом."
+                ]
+            }
+        ];
+
+        const quizQuestions = [
+            { question: "Какое озеро содержит около 20% мировых запасов пресной воды?", answers: ["Байкал", "Ладожское озеро", "Онежское озеро"], correct: 0 },
+            { question: "Где находятся знаменитые Ленские столбы?", answers: ["В Якутии", "В Татарстане", "В Карелии"], correct: 0 },
+            { question: "Какой объект является единственным в Евразии полем гейзеров?", answers: ["Долина гейзеров", "Кижи", "Тобольский кремль"], correct: 0 },
+            { question: "Какая вершина считается высочайшей точкой Европы?", answers: ["Эльбрус", "Белуха", "Народная"], correct: 0 },
+            { question: "Как называют плато с 10 000 водопадов на севере Сибири?", answers: ["Плато Путорана", "Куршская коса", "Валдай"], correct: 0 },
+            { question: "Сколько глав у главной церкви в Кижах?", answers: ["22", "13", "5"], correct: 0 },
+            { question: "Какая башня на Урале связана с династией Демидовых?", answers: ["Невьянская башня", "Спасская башня", "Башня Сююмбике"], correct: 0 },
+            { question: "За сколько недель, по преданию, был собран Свияжск?", answers: ["За 4 недели", "За год", "За 10 лет"], correct: 0 },
+            { question: "Как переводится название крепости Нарын-Кала в Дербенте?", answers: ["Солнечная крепость", "Лунная крепость", "Каменный орёл"], correct: 0 },
+            { question: "Какой кремль является единственным каменным в Сибири?", answers: ["Тобольский кремль", "Нижегородский кремль", "Астраханский кремль"], correct: 0 }
+        ];
+
+        const grid = document.getElementById("grid");
+        const modal = document.getElementById("modal");
+        const modalClose = document.getElementById("modalClose");
+        const progressText = document.getElementById("progressText");
+        const progressFill = document.getElementById("progressFill");
+        const filterButtons = document.querySelectorAll(".filter-btn");
+
+        let currentFilter = "all";
+        let currentIndex = 0;
+        let opened = new Set(JSON.parse(localStorage.getItem("openedTreasures") || "[]"));
+
+        function getFilteredExhibits() {
+            if (currentFilter === "all") return exhibits;
+            return exhibits.filter(item => item.type === currentFilter);
+        }
+
+        function renderCards() {
+            const items = getFilteredExhibits();
+            grid.innerHTML = "";
+            items.forEach((item) => {
+                const card = document.createElement("button");
+                card.className = "card";
+                if (opened.has(item.id)) card.classList.add("opened");
+                card.innerHTML = `
+                    <div class="card-media">
+                        <span class="card-symbol">${item.symbol}</span>
+                        <img src="${item.image}" alt="${item.title}" onerror="this.style.display='none'">
+                        <span class="card-type">${item.type}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-region">${item.region}</div>
+                        <h4>${item.title}</h4>
+                        <div class="card-unique">💎 ${item.unique}</div>
+                        <div class="card-short">${item.short}</div>
+                    </div>
+                `;
+                card.addEventListener("click", () => {
+                    const realIndex = exhibits.findIndex(ex => ex.id === item.id);
+                    openModal(realIndex);
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function updateProgress() {
+            const count = opened.size;
+            progressText.textContent = `Вы открыли сокровищ: ${count} из ${exhibits.length}`;
+            progressFill.style.width = `${(count / exhibits.length) * 100}%`;
+            localStorage.setItem("openedTreasures", JSON.stringify([...opened]));
+        }
+
+        function openModal(index) {
+            currentIndex = index;
+            const item = exhibits[index];
+            opened.add(item.id);
+            updateProgress();
+            renderCards();
+
+            document.getElementById("modalMedia").innerHTML = `
+                <span class="modal-symbol">${item.symbol}</span>
+                <img src="${item.image}" alt="${item.title}" onerror="this.style.display='none'">
+            `;
+            document.getElementById("modalKicker").textContent = `${item.type} · ${item.region}`;
+            document.getElementById("modalTitle").textContent = item.title;
+            document.getElementById("modalUnique").textContent = "💎 " + item.unique;
+            document.getElementById("modalText").textContent = item.full;
+            document.getElementById("modalFacts").innerHTML = item.facts.map(fact => `<div class="fact">✨ ${fact}</div>`).join("");
+
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        function nextExhibit() { currentIndex = (currentIndex + 1) % exhibits.length; openModal(currentIndex); }
+        function prevExhibit() { currentIndex = (currentIndex - 1 + exhibits.length) % exhibits.length; openModal(currentIndex); }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                filterButtons.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentFilter = btn.dataset.filter;
+                renderCards();
+            });
+        });
+
+        document.getElementById("randomBtn").addEventListener("click", () => openModal(Math.floor(Math.random() * exhibits.length)));
+        document.getElementById("resetProgressBtn").addEventListener("click", () => { opened.clear(); updateProgress(); renderCards(); });
+        modalClose.addEventListener("click", closeModal);
+        document.getElementById("nextBtn").addEventListener("click", nextExhibit);
+        document.getElementById("prevBtn").addEventListener("click", prevExhibit);
+        modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
+        document.addEventListener("keydown", (event) => {
+            if (!modal.classList.contains("show")) return;
+            if (event.key === "Escape") closeModal();
+            if (event.key === "ArrowRight") nextExhibit();
+            if (event.key === "ArrowLeft") prevExhibit();
+        });
+
+        const quizForm = document.getElementById("quizForm");
+        const quizResult = document.getElementById("quizResult");
+
+        function renderQuiz() {
+            quizForm.innerHTML = quizQuestions.map((q, index) => `
+                <div class="question">
+                    <h4>${index + 1}. ${q.question}</h4>
+                    <div class="answers">
+                        ${q.answers.map((answer, answerIndex) => `
+                            <label class="answer">
+                                <input type="radio" name="question${index}" value="${answerIndex}"> ${answer}
+                            </label>
+                        `).join("")}
+                    </div>
+                </div>
+            `).join("");
+            quizResult.style.display = "none";
+            quizResult.innerHTML = "";
+        }
+
+        function checkQuiz() {
+            let score = 0, answered = 0;
+            quizQuestions.forEach((q, index) => {
+                const selected = quizForm.querySelector(`input[name="question${index}"]:checked`);
+                if (selected) { answered++; if (Number(selected.value) === q.correct) score++; }
+            });
+            let title = score === 10 ? "Великолепно! Вы — настоящий хранитель сокровищ России." :
+                        score >= 8 ? "Отлично! Вы прекрасно знаете сокровища земли русской." :
+                        score >= 5 ? "Хороший результат! Но сокровищница ещё хранит тайны — вернитесь к карточкам." :
+                        "Путешествие только начинается. Откройте сокровища ещё раз и попробуйте снова.";
+            
+            quizResult.style.display = "block";
+            quizResult.innerHTML = `<strong>Ваш результат: ${score} из ${quizQuestions.length}</strong><br>${title}${answered < quizQuestions.length ? "<br><br>Вы ответили не на все вопросы." : ""}`;
+        }
+
+        document.getElementById("checkQuizBtn").addEventListener("click", checkQuiz);
+        document.getElementById("retryQuizBtn").addEventListener("click", renderQuiz);
+
+        renderCards();
+        updateProgress();
+        renderQuiz();
+    </script>
+</body>
+</html>
